@@ -40,13 +40,19 @@ console.log(`${estilos.negrito}${cores.vermelho}${separadorSuperior}${cores.cinz
 console.log(`${cores.cinza}${estilos.negrito}${centralizado}${cores.limpa}`);
 console.log(`${estilos.negrito}${cores.verde}${separadorInferior}${cores.limpa}`);
 
-const listaCPFs = [11111,22222,33333];
 
-const informacoesPessoa = ["nome", "jose", "idade", 32, "CPF", "111122223333"];
 
-console.log(informacoesPessoa[1]);
-
-const objetoPessoa = {
-  nome: "higor", 
-  idade: 32,
+const cliente = {
+  nome: "Andre", 
+  idade: 32, 
+  cpf: "12312312313",
+  email: "ander@gmail.com",
 }
+
+console.log(`${cores.cinza}${estilos.negrito}O nome do cliente é ${cores.ciano}${cliente["nome"]}${cores.cinza} e essa pessoa tem ${cores.amarelo}${cliente["idade"]} anos${cores.limpa}`);
+
+const chaves = ["nome", "idade", "cpf", "email"];
+
+chaves.forEach((chave) => {
+  console.log(`A chave ${chave} tem valor ${cliente[chave]}`)
+});

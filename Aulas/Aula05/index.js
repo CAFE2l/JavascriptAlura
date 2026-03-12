@@ -28,30 +28,31 @@ const estilos = {
 };
 
 // Variáveis de apoio
-const terreno = "Estrutura de um for of";
+const terreno = "Estrutura de um forEach";
 const separadorSuperior = "===".repeat(5);
-const separadorInferior = "===".repeat(12);
+const separadorInferior = "===".repeat(12) + "=";
 
 // Lógica de centralização manual (o JS não tem o .center do Python nativo)
 const centralizado = terreno.padStart((40 + terreno.length) / 2).padEnd(40);
 
 // Execução do Print
-console.log(`${estilos.negrito}${cores.vermelho}${separadorSuperior}${cores.cinza}ForOF${cores.azul}${separadorSuperior}${cores.limpa}`);
+console.log(`${estilos.negrito}${cores.vermelho}${separadorSuperior}${cores.cinza}ForEach${cores.azul}${separadorSuperior}${cores.limpa}`);
 console.log(`${cores.cinza}${estilos.negrito}${centralizado}${cores.limpa}`);
 console.log(`${estilos.negrito}${cores.verde}${separadorInferior}${cores.limpa}`);
 
 
 
-const notas = [10, 6.4, 8, 7.5];
+const notas = [10, 6.5, 8, 7.5];
 
-let somaNotas = 0;
+let somaNotas  = 0;
 
-for(let nota of notas){
-  somaNotas += nota
-}
-
+notas.forEach(function(nota, indice){
+  somaNotas += nota;
+  console.log(indice);
+});
 const media = somaNotas / notas.length;
 
 console.log(`${cores.cinza}${estilos.negrito}A soma entre todas as notas é de ${estilos.italico}${cores.ciano}${somaNotas}${cores.limpa}`);
 
 console.log(`${cores.cinza}${estilos.negrito}A média entre as notas é de ${estilos.italico}${cores.ciano}${media}${cores.limpa}`)
+

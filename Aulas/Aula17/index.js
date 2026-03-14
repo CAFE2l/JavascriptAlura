@@ -28,37 +28,26 @@ const estilos = {
 };
 
 // Variáveis de apoio
-const terreno = "Calculando novas notas";
+const terreno = "Cadastrando um endereço";
 const separadorSuperior = "===".repeat(5);
-const separadorInferior = "===".repeat(13) + "=";
+const separadorInferior = "===".repeat(15);
 
 // Lógica de centralização manual (o JS não tem o .center do Python nativo)
 const centralizado = terreno.padStart((40 + terreno.length) / 2).padEnd(40);
 
 // Execução do Print
-console.log(`${estilos.negrito}${cores.vermelho}${separadorSuperior}${cores.cinza}NovasNotas${cores.azul}${separadorSuperior}${cores.limpa}`);
+console.log(`${estilos.negrito}${cores.vermelho}${separadorSuperior}${cores.cinza}CadastroEndereco${cores.azul}${separadorSuperior}${cores.limpa}`);
 console.log(`${cores.cinza}${estilos.negrito}${centralizado}${cores.limpa}`);
 console.log(`${estilos.negrito}${cores.verde}${separadorInferior}${cores.limpa}`);
 
-const cliente = {
-  nome: "Joao",
-  idade: 23,
-  email: "Joao@gmail.com",
-  telefone:["1155555550","1144444440"],
-};
 
-cliente.enderecos = [
-  {
-    rua: "R. Joseph Climber",
-    numero: 103,
-    apartamento: true,
-    complemento: "Ap 934",
-  }
-];
+const dados = require("./index.json");
+console.log(dados);
+console.log(typeof(dados));   
 
-for (let chave in cliente){
-  let tipo = typeof cliente[chave];
-  if (tipo !== 'object' && tipo !== 'function'){
-  console.log(`${cores.cinza}${estilos.negrito}A chave ${cores.ciano}${chave}${cores.cinza} tem o valor de ${cores.verde}${cliente[chave]}`);
-  }
-}
+const clienteString = JSON.stringify(dados);
+console.log(clienteString);
+// console.log(typeof(clienteString)
+
+const objeto = JSON.parse(clienteString);
+console.log(objeto);

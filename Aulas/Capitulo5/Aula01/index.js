@@ -1,75 +1,42 @@
 import fs from 'fs';
 import chalk from 'chalk';
 
-
-const cores = {
-    limpa: "\x1b[0m",
-    vermelho: "\x1b[31m",
-    verde: "\x1b[32m",
-    amarelo: "\x1b[33m",
-    azul: "\x1b[34m",
-    roxo: "\x1b[35m",
-    ciano: "\x1b[36m",
-    cinza: "\x1b[37m",
-    pretoebranco: "\x1b[7;30m"
-};
-
-const fundo = {
-    branco: "\x1b[40m",
-    vermelho: "\x1b[41m",
-    cinza_claro: "\x1b[107m"
-};
-
-const estilos = {
-    reset: "\x1b[0m",
-    negrito: "\x1b[1m",
-    fraco: "\x1b[2m",
-    italico: "\x1b[3m",
-    sublinhado: "\x1b[4m",
-    inverso: "\x1b[7m",
-    invisivel: "\x1b[8m",
-    tachado: "\x1b[9m"
-};
-
-// Variáveis de apoio
-const terreno = "nao estou entendendo nada";
-const separadorSuperior = "===".repeat(5);
-const separadorInferior = "===".repeat(12) + "=";
-
-// Lógica de centralização manual (o JS não tem o .center do Python nativo)
-const centralizado = terreno.padStart((40 + terreno.length) / 2).padEnd(40);
-
-// Execução do Print
-console.log(`${estilos.negrito}${cores.vermelho}${separadorSuperior}${cores.cinza}ComoAssim${cores.azul}${separadorSuperior}${cores.limpa}`);
-console.log(`${cores.cinza}${estilos.negrito}${centralizado}${cores.limpa}`);
-console.log(`${estilos.negrito}${cores.verde}${separadorInferior}${cores.limpa}`);
+const textoTeste = "Lorem ipsum (/ˌlɔː.rəm ˈɪp.səm/ LOR-əm IP-səm) is a dummy or placeholder text commonly used in graphic design, publishing, and web development. [Exemplo](https://www.example.com) It is typically a corrupted version of De finibus bonorum et malorum, [Outro link](http://teste.com.br) a 1st-century BC text by the Roman statesman and philosopher Cicero, with words altered, added, and removed to make it nonsensical and improper Latin."
 
 function trataErro(erro){
   console.log(erro)
-  throw new Error(chalk.red(erro.code, "Nao há nenhum um arquivo no diretorio"));
-
+  throw new Error(chalk.red(erro.code, "Não há nenhum um arquivo no diretorio"));
 }
-//async & await
 
 async function pegaArquivo(caminhoDoArquivo){
   try{
    const encoding = 'utf-8';
    const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
-  console.log(chalk.green(texto));
+   console.log(chalk.green(texto));
+   extraiLinks(texto); // Adicionei isso para processar o texto do arquivo
   } catch(erro){
-  trataErro(erro);
+    trataErro(erro);
   }
 }
 
-// promises com then()
-// function pegaArquivo(caminhoDoArquivo){
-//   const encoding = 'utf-8';
-//   fs.promises
-//     .readFile(caminhoDoArquivo, encoding);
-//     .then((texto) => console.log(chalk.green(texto));
-//     .catch(trataErro);
-// }
+function extraiLinks(texto){
+  const regex = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/gm;
+  const capturas = [...texto.matchAll(regex)];
+  
+  if(capturas.length === 0) {
+    console.log(chalk.yellow("Nenhum link encontrado no texto"));
+    return;
+  }
+  
+  const resultados = capturas.map(match => ({
+    texto: match[1],
+    link: match[2]
+  }));
+  
+  console.log(chalk.blue("Links encontrados:"));
+  console.log(resultados);
+  return resultados;
+}
 
-
-pegaArquivo('./package.json');
-pegaArquivo('./package');
+// Teste com o texto
+extraiLinks(textoTeste);

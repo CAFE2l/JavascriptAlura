@@ -1,42 +1,28 @@
 import fs from 'fs';
 import chalk from 'chalk';
 
-function trataErro(erro){
-  console.error(chalk.red('Detalhes do erro:'), erro);
-  throw new Error(chalk.red(`${erro.code}: Não há nenhum arquivo no diretório informado`));
-}
-
-async function pegaArquivo(caminhoDoArquivo){
-  try{
-    const encoding = 'utf-8';
-    const texto = await fs.promises.readFile(caminhoDoArquivo, encoding);
-    console.log(chalk.green('✓ Arquivo lido com sucesso!'));
-    return extraiLinks(texto);
-  } catch(erro){
-    trataErro(erro);
-  }
-}
-
-function extraiLinks(texto){
-  const regex = /\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/gm;
+function extraiLinks(texto) {
+  const regex = /\[([^[\]]*?)\]\((https?:\/\/[^\s?#.].[^\s]*)\)/gm;
   const capturas = [...texto.matchAll(regex)];
-  
-  if(capturas.length === 0) {
-    console.log(chalk.yellow("⚠️ Nenhum link encontrado no texto"));
-    return [];
-  }
-  
-  const resultados = capturas.map(match => ({
-    texto: match[1],
-    link: match[2]
-  }));
-  
-  console.log(chalk.blue(`🔗 ${resultados.length} link(s) encontrado(s):`));
-  return resultados;
+  const resultados = capturas.map(captura => ({[captura[1]]: captura[2]}))
+  return resultados.length !== 0 ? resultados : 'não há links no arquivo';
 }
 
-// Remove ou comenta as chamadas de teste
-// extraiLinks(textoTeste);
-// pegaArquivo('./package.json');
+function trataErro(erro) {
+  console.log(erro);
+  throw new Error(chalk.red(erro.code, 'não há arquivo no diretório'));
+}
+
+// async/await
+
+async function pegaArquivo(caminhoDoArquivo) {
+  try {
+    const encoding = 'utf-8';
+    const texto = await fs.promises.readFile(caminhoDoArquivo, encoding)
+    return extraiLinks(texto);
+  } catch (erro) {
+    trataErro(erro)
+  }
+}
 
 export default pegaArquivo;

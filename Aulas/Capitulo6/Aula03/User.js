@@ -56,7 +56,7 @@ export default class User {
     this.#ativo = novoAtivo;
   }
   exibirInfos(){
-
+    return `${this.nome}, ${this.email}, ${this.nascimento}, ${this.role}, ${this.ativo}`
   }
 }
 

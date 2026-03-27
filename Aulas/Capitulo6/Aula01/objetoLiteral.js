@@ -14,7 +14,7 @@ const admin = {
   email: "queDelicia@gmail.com",
   role: "admin",
   criarCurso(){
-    console.log('curso criado!')
+    console.log('curso criado!');
   }
 }
 
